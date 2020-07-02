@@ -15,7 +15,7 @@ class SQLiteProvider implements DbInterface {
   Database _database;
 
   final int dbVersion = 1;
-  final String dbName = 'ToDoDB.db';
+  final String dbName = 'WorkersDB.db';
 
   Future<Database> get database async {
     if (_database != null) return _database;
@@ -37,20 +37,23 @@ class SQLiteProvider implements DbInterface {
   //Create DB tables
   Future<void> _onCreate(Database db, int version) async {
     //Create categories table
-    await db.execute('CREATE TABLE Categories ('
+    await db.execute('CREATE TABLE Workers ('
         'id INTEGER PRIMARY KEY AUTOINCREMENT,'
-        'title TEXT NOT NULL,'
-        'icon TEXT NOT NULL'
+        'surname TEXT NOT NULL,'
+        'name TEXT NOT NULL,'
+        'middleName TEXT NOT NULL,'
+        'date TEXT NOT NULL,'
+        'position TEXT NOT NULL,'
         ')');
 
     //Create tasks table
-    await db.execute('CREATE TABLE Items ('
+    await db.execute('CREATE TABLE Childrens ('
         'id INTEGER PRIMARY KEY AUTOINCREMENT,'
-        'category INTEGER NOT NULL,'
-        'title TEXT NOT NULL,'
-        'description TEXT,'
-        //sqllite don't have bool type, save like integer and check, deafault 0
-        'completed INTEGER DEFAULT 0 CHECK (completed IN (0,1))'
+        'worker INTEGER NOT NULL,'
+        'surname TEXT NOT NULL,'
+        'name TEXT NOT NULL,'
+        'middleName TEXT NOT NULL,'
+        'date TEXT NOT NULL,'
         ')');
   }
 
@@ -76,8 +79,6 @@ class SQLiteProvider implements DbInterface {
           orderBy: orderBy,
           limit: limit,
           offset: offset));
-
-  //TODO: add catch errors
 
   Future<List<Map<String, dynamic>>> customSelect(String query) async =>
       await database.then((db) => db.rawQuery(query));

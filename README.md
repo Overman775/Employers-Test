@@ -1,12 +1,16 @@
 <h1 align="center">
 <img src="./assets/icon/icon.png" width="200"/></br></br>
-Neo ToDo - Beautiful neumorphism style todo list
+Employees list
 </h1>
 
 
-|<img src="./screenshots/animation.gif" width="300" />|<font size="+2"><p align="left">• Neomorphism style.</br>• Categories of tasks.</br>• Beautiful animations.</br>• Dark theme.</br>• Font Awesome icons.</br>• Provider.</br>• Sqlite DB.</p></font>|
-|---|---|
+## Reworked from Neo-Todo
 
+[original link](https://github.com/Overman775/Neo-Todo) 
+
+## About
+
+<font size="+2"><p align="left">• Neomorphism style.</br>• Children's of employees.</br>• Beautiful animations.</br>• Dark theme.</br>• Font Awesome icons.</br>• Provider.</br>• Sqlite DB.</p></font>
 
 ## How To Use
 
@@ -14,7 +18,7 @@ To clone and run this application, you'll need [Git](https://git-scm.com) and [F
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/Overman775/Neo-Todo.git
+$ git clone https://github.com/Overman775/Employers-Test.git
 
 # Go into the repository
 $ cd fluttery-todo
@@ -26,21 +30,6 @@ $ flutter packages get
 $ flutter run
 ```
 
-## Download
-
-You can [download](https://play.google.com/store/apps/details?id=com.flutter.bananavolt.neumorphism.neo.todo) the latest installable version of Todo for Android.
-
- <a href="https://play.google.com/store/apps/details?id=com.flutter.bananavolt.neumorphism.neo.todo"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="250"></a>
-
-
-## Screenshots
-
-<details>
-  <summary>Screenshots</summary>
-
-| ![Screenshot 1](https://raw.github.com/Overman775/Neo-Todo/master/screenshots/flutter_01.png) | ![Screenshot 2](https://raw.github.com/Overman775/Neo-Todo/master/screenshots/flutter_02.png) | ![Screenshot 3](https://raw.github.com/Overman775/Neo-Todo/master/screenshots/flutter_03.png) |
-|---|---|---|
-| ![Screenshot 4](https://raw.github.com/Overman775/Neo-Todo/master/screenshots/flutter_04.png) | ![Screenshot 5](https://raw.github.com/Overman775/Neo-Todo/master/screenshots/flutter_05.png) | ![Screenshot 6](https://raw.github.com/Overman775/Neo-Todo/master/screenshots/flutter_06.png) |
 
 </details>
 

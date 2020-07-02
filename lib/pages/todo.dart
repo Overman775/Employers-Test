@@ -1,14 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:expandable/expandable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../bloc/todo.dart';
+import '../models/data_models.dart';
 import '../models/pages_arguments.dart';
-import '../models/todo_models.dart';
+import '../providers/todo.dart';
 import '../router.dart';
 import '../style.dart';
 import '../widgets/cover_line.dart';
@@ -39,7 +38,7 @@ class _TodoPageState extends State<TodoPage> {
 
   @override
   void initState() {
-    context.read<Todo>().getItems(widget.args.category.id);
+    context.read<Todo>().getChildrens(widget.args.category.id);
 
     /*
     context.read<Todo>().addListener(() {
@@ -75,7 +74,7 @@ class _TodoPageState extends State<TodoPage> {
             Padding(
               padding: EdgeInsets.fromLTRB(Style.mainPadding, Style.halfPadding,
                   Style.mainPadding, Style.mainPadding),
-              child: Selector<Todo, TodoCategory>(
+              child: Selector<Todo, Worker>(
                 selector: (BuildContext context, Todo todo) => todo.categoryes
                     .firstWhere(
                         (element) => element.id == widget.args.category.id,
@@ -90,7 +89,6 @@ class _TodoPageState extends State<TodoPage> {
                   return Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      HeroIcon(category: category),
                       const SizedBox(width: Style.mainPadding),
                       Expanded(child: HeroProgress(category: category)),
                     ],
@@ -156,9 +154,9 @@ class CategoryAppBar extends StatelessWidget implements PreferredSizeWidget {
                 MainPageArguments(category: category, cardPosition: null));
         break;
       case 'delete':
-        await block.deleteCategory(args.category);
+        await block.deleteWorker(args.category);
         Navigator.of(context).pop();
-        await block.getCategoryes();
+        await block.getWorkers();
         break;
       default:
     }
@@ -167,7 +165,7 @@ class CategoryAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return NeumorphicAppBar(
-      title: Selector<Todo, TodoCategory>(
+      title: Selector<Todo, Worker>(
           selector: (BuildContext context, Todo todo) => todo.categoryes
               .firstWhere((element) => element.id == args.category.id,
                   orElse: () => null),
@@ -256,45 +254,14 @@ class ListBody extends StatelessWidget {
                             Style.mainPadding),
                         child: Column(
                           children: <Widget>[
-                            ...todo.items_unCompleted.map((item) =>
-                                TodoItemWidget(item, widget.args.category)),
+                            ...todo.items.map((item) =>
+                                ChildWidget(item, widget.args.category)),
                           ],
                         ),
                       ),
                       const SizedBox(
                         height: Style.halfPadding,
                       ),
-                      if (todo.items_completed.isNotEmpty)
-                        ExpandablePanel(
-                            header: TextFieldLabel(
-                              'completed'.tr(),
-                              padding:
-                                  EdgeInsets.only(left: Style.doublePadding),
-                            ),
-                            theme: ExpandableThemeData(
-                                headerAlignment:
-                                    ExpandablePanelHeaderAlignment.center,
-                                iconPadding:
-                                    EdgeInsets.only(right: Style.doublePadding),
-                                iconColor:
-                                    NeumorphicTheme.defaultTextColor(context),
-                                expandIcon: FontAwesomeIcons.angleDown,
-                                collapseIcon: FontAwesomeIcons.angleDown,
-                                useInkWell: false),
-                            expanded: Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                  Style.mainPadding,
-                                  Style.halfPadding,
-                                  Style.mainPadding,
-                                  Style.mainPadding),
-                              child: Column(
-                                children: <Widget>[
-                                  ...todo.items_completed.map((item) =>
-                                      TodoItemWidget(
-                                          item, widget.args.category)),
-                                ],
-                              ),
-                            ))
                     ],
                   );
                 } else {

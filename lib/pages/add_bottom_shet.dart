@@ -5,20 +5,20 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../bloc/todo.dart';
-import '../models/todo_models.dart';
+import '../providers/todo.dart';
+import '../models/data_models.dart';
 import '../style.dart';
 import '../widgets/text_field.dart';
 
-class AddItemBottomShet extends StatefulWidget {
-  final TodoCategory category;
-  AddItemBottomShet({Key key, @required this.category}) : super(key: key);
+class AddChildBottomShet extends StatefulWidget {
+  final Worker category;
+  AddChildBottomShet({Key key, @required this.category}) : super(key: key);
 
   @override
-  _AddItemBottomShetState createState() => _AddItemBottomShetState();
+  _AddChildBottomShetState createState() => _AddChildBottomShetState();
 }
 
-class _AddItemBottomShetState extends State<AddItemBottomShet> {
+class _AddChildBottomShetState extends State<AddChildBottomShet> {
   String title = '';
   String description = '';
   bool enableDescription = false;
@@ -55,10 +55,10 @@ class _AddItemBottomShetState extends State<AddItemBottomShet> {
 
   Future saveItem() async {
     if (_saveEnable) {
-      await context.read<Todo>().addItem(TodoItem(
-          category: widget.category.id,
+      await context.read<Todo>().addChild(Child());
+      /* category: widget.category.id,
           title: title,
-          description: description));
+          description: description));*/
 
       //go back
       Navigator.of(context).pop();
@@ -131,12 +131,12 @@ class _AddItemBottomShetState extends State<AddItemBottomShet> {
   }
 }
 
-void modalBottomSheet(BuildContext context, TodoCategory category) {
+void modalBottomSheet(BuildContext context, Worker category) {
   showModalBottomSheet<Widget>(
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       context: context,
       builder: (_) {
-        return AddItemBottomShet(category: category);
+        return AddChildBottomShet(category: category);
       });
 }

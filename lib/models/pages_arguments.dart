@@ -1,16 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'todo_models.dart';
+import 'data_models.dart';
 
 class ItemPageArguments {
-  final TodoItem item;
-  final TodoCategory category;
+  final Child item;
+  final Worker category;
 
   ItemPageArguments({this.item, @required this.category});
 }
 
 class MainPageArguments {
-  final TodoCategory category;
+  final Worker category;
   final CardPosition cardPosition;
 
   MainPageArguments({this.category, @required this.cardPosition});

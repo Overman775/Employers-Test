@@ -4,16 +4,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:provider/provider.dart';
 
-import '../bloc/todo.dart';
+import '../models/data_models.dart';
 import '../models/pages_arguments.dart';
-import '../models/todo_models.dart';
+import '../providers/todo.dart';
 import '../style.dart';
 
-class TodoItemWidget extends StatelessWidget {
-  final TodoItem item;
-  final TodoCategory category;
+class ChildWidget extends StatelessWidget {
+  final Child item;
+  final Worker category;
 
-  TodoItemWidget(this.item, this.category, {Key key}) : super(key: key);
+  ChildWidget(this.item, this.category, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +27,8 @@ class TodoItemWidget extends StatelessWidget {
       child: Dismissible(
         key: Key('item_${item.id}'),
         child: ListTile(
-          leading: Checkbox(
-            value: item.completed,
-            onChanged: (bool checked) {
-              context.read<Todo>().toggleItem(item);
-            },
-          ),
-          title: Text(item.title),
-          subtitle: item.description != null ? Text(item.description) : null,
+          title: Text(item.name),
+          subtitle: item.middleName != null ? Text(item.middleName) : null,
           //go to edit page
           onTap: () => unawaited(Navigator.pushNamed(context, '/item/edit',
               arguments: ItemPageArguments(item: item, category: category))),
@@ -54,7 +48,7 @@ class TodoItemWidget extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerLeft,
               child: FaIcon(
-                FontAwesomeIcons.check,
+                FontAwesomeIcons.pen,
                 color: Colors.white,
               ),
             ),
@@ -83,9 +77,10 @@ class TodoItemWidget extends StatelessWidget {
         ),
         onDismissed: (direction) {
           if (direction == DismissDirection.endToStart) {
-            context.read<Todo>().deleteItem(item);
+            context.read<Todo>().deleteChild(item);
           } else if (direction == DismissDirection.startToEnd) {
-            context.read<Todo>().toggleItem(item);
+            unawaited(Navigator.pushNamed(context, '/item/edit',
+                arguments: ItemPageArguments(item: item, category: category)));
           }
         },
       ),

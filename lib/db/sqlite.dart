@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
-import '../models/todo_models.dart';
+import '../models/data_models.dart';
 
 import 'db.dart';
 
@@ -43,7 +43,7 @@ class SQLiteProvider implements DbInterface {
         'name TEXT NOT NULL,'
         'middleName TEXT NOT NULL,'
         'date TEXT NOT NULL,'
-        'position TEXT NOT NULL,'
+        'position TEXT NOT NULL'
         ')');
 
     //Create tasks table
@@ -53,7 +53,7 @@ class SQLiteProvider implements DbInterface {
         'surname TEXT NOT NULL,'
         'name TEXT NOT NULL,'
         'middleName TEXT NOT NULL,'
-        'date TEXT NOT NULL,'
+        'date TEXT NOT NULL'
         ')');
   }
 
@@ -84,17 +84,17 @@ class SQLiteProvider implements DbInterface {
       await database.then((db) => db.rawQuery(query));
 
   @override
-  Future<int> insert(String table, TodoModel model) async =>
+  Future<int> insert(String table, DataModel model) async =>
       await database.then((db) => db.insert(table, model.toMap()));
 
   @override
-  Future<int> update(String table, TodoModel model,
+  Future<int> update(String table, DataModel model,
           {String where = 'id = ?'}) async =>
       await database.then((db) => db.update(table, model.toMap(),
           where: where, whereArgs: <dynamic>[model.id]));
 
   @override
-  Future<int> delete(String table, TodoModel model,
+  Future<int> delete(String table, DataModel model,
           {String where = 'id = ?'}) async =>
       await database.then((db) =>
           db.delete(table, where: where, whereArgs: <dynamic>[model.id]));

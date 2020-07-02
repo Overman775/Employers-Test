@@ -16,6 +16,9 @@ class Todo extends ChangeNotifier {
     await getWorkers();
   }
 
+  //TODO: finish
+  int get totalChildrens => 99;
+
   Future getWorkers({bool notify = true}) async {
     var _results = await SQLiteProvider.db.customSelect('SELECT t.* ,'
         '(SELECT COUNT(*) FROM ${Child.table} i WHERE i.worker=t.id ) as childrens '

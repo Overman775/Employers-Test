@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
 
-import '../bloc/todo.dart';
+import '../providers/todo.dart';
 import '../style.dart';
 import '../widgets/carousel.dart';
 import '../widgets/timer.dart';
@@ -32,7 +32,7 @@ class MainPage extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(Style.doublePadding,
                   Style.mainPadding, Style.mainPadding, 0.0),
               child: Selector<Todo, int>(
-                  selector: (_, todo) => todo.total_items,
+                  selector: (_, todo) => todo.totalChildrens,
                   shouldRebuild: (old_total, new_total) =>
                       old_total != new_total,
                   builder: (_, total_items, __) {

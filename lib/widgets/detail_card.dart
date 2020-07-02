@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
-import '../models/todo_models.dart';
+import '../models/data_models.dart';
 import '../style.dart';
 import 'animated_percent.dart';
 
@@ -12,7 +12,7 @@ class HeroProgress extends StatelessWidget {
     @required this.category,
   }) : super(key: key);
 
-  final TodoCategory category;
+  final Worker category;
 
   @override
   Widget build(BuildContext context) {
@@ -28,38 +28,15 @@ class HeroProgress extends StatelessWidget {
                 color:
                     NeumorphicTheme.defaultTextColor(context).withOpacity(0.5),
                 fontSize: 16.00),
-          ).plural(category.totalItems),
+          ).plural(category.childrens),
           const SizedBox(
             height: Style.halfPadding,
           ),
           Row(
             children: <Widget>[
-              Expanded(
-                child: NeumorphicProgress(
-                    percent: category.percent,
-                    height: 8,
-                    duration: const Duration(milliseconds: 300),
-                    style: ProgressStyle(
-                        depth: NeumorphicTheme.depth(
-                            context) // TODO: fix depth and others
-                        )),
-              ),
               SizedBox(
                 width: Style.mainPadding,
               ),
-              Container(
-                width: 48,
-                alignment: Alignment.centerRight,
-                child: AnimatedPercent(
-                  category.percent,
-                  style: TextStyle(
-                      color: NeumorphicTheme.defaultTextColor(context)
-                          .withOpacity(0.5),
-                      fontSize: 16.00),
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeOutCubic,
-                ),
-              )
             ],
           ),
         ],
@@ -74,7 +51,7 @@ class HeroTitle extends StatelessWidget {
     @required this.category,
   }) : super(key: key);
 
-  final TodoCategory category;
+  final Worker category;
 
   @override
   Widget build(BuildContext context) {
@@ -82,36 +59,11 @@ class HeroTitle extends StatelessWidget {
       tag: 'title_${category.id}',
       flightShuttleBuilder: flightShuttleBuilderFix,
       child: Text(
-        category.title,
+        category.name,
         style: TextStyle(
             color: NeumorphicTheme.defaultTextColor(context), fontSize: 40.00),
         softWrap: false,
         overflow: TextOverflow.ellipsis,
-      ),
-    );
-  }
-}
-
-class HeroIcon extends StatelessWidget {
-  const HeroIcon({
-    Key key,
-    @required this.category,
-  }) : super(key: key);
-
-  final TodoCategory category;
-
-  @override
-  Widget build(BuildContext context) {
-    return Hero(
-      tag: 'icon_${category.id}',
-      child: Neumorphic(
-        padding: const EdgeInsets.all(16),
-        style: const NeumorphicStyle(boxShape: NeumorphicBoxShape.circle()),
-        child: FaIcon(
-          category.icon,
-          color: Style.primaryColor,
-          size: 32,
-        ),
       ),
     );
   }

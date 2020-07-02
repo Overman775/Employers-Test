@@ -6,10 +6,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import '../bloc/todo.dart';
-import '../models/pages_arguments.dart';
-import '../models/todo_models.dart';
 
+import '../models/data_models.dart';
+import '../models/pages_arguments.dart';
+import '../providers/todo.dart';
 import '../style.dart';
 import 'detail_card.dart';
 
@@ -44,7 +44,7 @@ class _CarouselState extends State<Carousel> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-        child: Selector<Todo, List<TodoCategory>>(
+        child: Selector<Todo, List<Worker>>(
       selector: (_, todo) => todo.categoryes,
       shouldRebuild: (old_categoryes, new_categoryes) {
         if (old_categoryes.length != new_categoryes.length) {
@@ -86,7 +86,7 @@ class _CarouselState extends State<Carousel> {
 }
 
 class CategoryCard extends StatelessWidget {
-  final TodoCategory category;
+  final Worker category;
   final double scale;
   final double scaleDepth;
   const CategoryCard(this.category, this.scale, this.scaleDepth, {Key key})
@@ -115,10 +115,8 @@ class CategoryCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              HeroIcon(category: category),
-              const Spacer(),
-              //detail
               HeroTitle(category: category),
+              const Spacer(),
               SizedBox(
                 height: Style.mainPadding,
               ),

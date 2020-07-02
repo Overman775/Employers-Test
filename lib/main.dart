@@ -7,8 +7,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'bloc/settings.dart';
-import 'bloc/todo.dart';
+import 'providers/settings.dart';
+import 'providers/todo.dart';
 import 'router.dart';
 import 'style.dart';
 import 'widgets/neo_app_style.dart';

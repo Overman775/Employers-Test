@@ -1,5 +1,5 @@
 //DB interface
-import '../models/todo_models.dart';
+import '../models/data_models.dart';
 
 class DbInterface {
   Future initDB() {
@@ -19,15 +19,15 @@ class DbInterface {
     return Future.value(null);
   }
 
-  Future<int> insert(String table, TodoModel model) {
+  Future<int> insert(String table, DataModel model) {
     return Future.value(null);
   }
 
-  Future<int> update(String table, TodoModel model) {
+  Future<int> update(String table, DataModel model) {
     return Future.value(null);
   }
 
-  Future<int> delete(String table, TodoModel model) {
+  Future<int> delete(String table, DataModel model) {
     return Future.value(null);
   }
 }

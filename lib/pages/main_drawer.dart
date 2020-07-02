@@ -7,7 +7,7 @@ import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../bloc/settings.dart';
+import '../providers/settings.dart';
 import '../style.dart';
 
 class MainDrawer extends StatelessWidget {

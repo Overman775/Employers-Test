@@ -18,7 +18,7 @@ Route geneateRoute(RouteSettings settings) {
     case '/item/edit':
       return MaterialPageRoute<Widget>(
           builder: (context) =>
-              AddItem(settings.arguments as ItemPageArguments));
+              AddChild(settings.arguments as ItemPageArguments));
     case '/category':
       //return router with card animation
       return CardRoute(
@@ -26,12 +26,12 @@ Route geneateRoute(RouteSettings settings) {
           arguments: settings.arguments as MainPageArguments);
     case '/category/add':
       return CardRoute(
-          widget: AddCategory(settings.arguments as MainPageArguments),
+          widget: AddWorker(settings.arguments as MainPageArguments),
           arguments: settings.arguments as MainPageArguments);
     case '/category/edit':
       return MaterialPageRoute<Widget>(
           builder: (context) =>
-              AddCategory(settings.arguments as MainPageArguments));
+              AddWorker(settings.arguments as MainPageArguments));
     default:
       return MaterialPageRoute<Widget>(builder: (context) => const Page404());
   }

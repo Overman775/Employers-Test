@@ -3,20 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
 
-import '../bloc/todo.dart';
+import '../providers/todo.dart';
 import '../models/pages_arguments.dart';
 import '../style.dart';
 import '../widgets/text_field.dart';
 
-class AddItem extends StatefulWidget {
+class AddChild extends StatefulWidget {
   final ItemPageArguments args;
-  AddItem(this.args, {Key key}) : super(key: key);
+  AddChild(this.args, {Key key}) : super(key: key);
 
   @override
-  _AddItemState createState() => _AddItemState();
+  _AddChildState createState() => _AddChildState();
 }
 
-class _AddItemState extends State<AddItem> {
+class _AddChildState extends State<AddChild> {
+  @override
+  Widget build(BuildContext context) {
+    throw UnimplementedError();
+  }
+
+  /*
   String title;
   String description;
 
@@ -41,7 +47,7 @@ class _AddItemState extends State<AddItem> {
 
   Future saveItem() async {
     if (_saveEnable) {
-      await context.read<Todo>().editItem(widget.args.item,
+      await context.read<Todo>().editChild(widget.args.item,
           widget.args.item.copyWith(title: title, description: description));
 
       //go back
@@ -97,5 +103,5 @@ class _AddItemState extends State<AddItem> {
         ),
       ),
     );
-  }
+  }*/
 }

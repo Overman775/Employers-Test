@@ -53,15 +53,17 @@ class Worker extends DataModel {
 
   @override
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
+    final map = <String, dynamic>{
       'surname': surname,
       'name': name,
       'middleName': middleName,
       'date': date?.toIso8601String(),
       'position': position,
-      'childrens': childrens,
     };
+    if (id != null) {
+      map['id'] = id;
+    }
+    return map;
   }
 
   factory Worker.fromMap(Map<String, dynamic> map) {
@@ -144,13 +146,16 @@ class Child extends DataModel {
 
   @override
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
+    final map = <String, dynamic>{
       'worker': worker,
       'name': name,
       'middleName': middleName,
       'date': date?.millisecondsSinceEpoch,
     };
+    if (id != null) {
+      map['id'] = id;
+    }
+    return map;
   }
 
   static Child fromMap(Map<String, dynamic> map) {

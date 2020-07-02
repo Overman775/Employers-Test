@@ -124,6 +124,8 @@ class Child extends DataModel {
     this.date,
   });
 
+  static const String table = 'Childrens';
+
   Child copyWith({
     int id,
     int worker,

@@ -116,11 +116,13 @@ class CategoryCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               HeroTitle(category: category),
+              HeroSubTitle(category: category),
               const Spacer(),
               SizedBox(
                 height: Style.mainPadding,
               ),
-              HeroProgress(category: category)
+              //HeroProgress(category: category)
+              HeroDetail(category: category)
             ],
           ),
         ),

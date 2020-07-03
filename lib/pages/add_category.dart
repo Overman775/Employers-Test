@@ -1,3 +1,4 @@
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -5,28 +6,31 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../bloc/todo.dart';
+import '../models/data_models.dart';
 import '../models/pages_arguments.dart';
-import '../models/todo_models.dart';
+import '../providers/todo.dart';
 import '../router.dart';
 import '../style.dart';
 import '../utils/icons.dart';
+import '../widgets/cover_line.dart';
 import '../widgets/save_button.dart';
 import '../widgets/text_field.dart';
+import '../widgets/text_form_fiels.dart';
 
-class AddCategory extends StatefulWidget {
+class AddWorker extends StatefulWidget {
   final MainPageArguments args;
 
-  AddCategory(this.args, {Key key}) : super(key: key);
+  AddWorker(this.args, {Key key}) : super(key: key);
 
   @override
-  _AddCategoryState createState() => _AddCategoryState();
+  _AddWorkerState createState() => _AddWorkerState();
 }
 
-class _AddCategoryState extends State<AddCategory> {
+class _AddWorkerState extends State<AddWorker> {
   String title = '';
-  IconData icon = icons_list.entries.first.value;
   AnimationPageInjection animationPageInjection;
+  Worker worker;
+  final _formKey = GlobalKey<FormState>();
 
   bool get _argsHaveCategory => widget.args?.category != null;
 
@@ -36,45 +40,32 @@ class _AddCategoryState extends State<AddCategory> {
       animationPageInjection?.animationPage?.value == 1 || _argsHaveCategory;
 
   bool get _canSave {
-    if (title != null && icon != null) {
+    if (title != null) {
       return title.isNotEmpty;
     } else {
       return false;
     }
   }
 
-  void categoryTitleChanget(String title) {
-    setState(() {
-      this.title = title;
-    });
-  }
-
-  void iconChanget(IconData icon) {
-    setState(() {
-      if (icon != null) {
-        this.icon = icon;
-      }
-    });
-  }
-
   Future saveCategory() async {
-    if (_argsHaveCategory) {
-      await context.read<Todo>().editCategory(widget.args.category,
-          TodoCategory(id: widget.args.category.id, title: title, icon: icon));
-    } else {
-      await context
-          .read<Todo>()
-          .addCategory(TodoCategory(title: title, icon: icon));
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+
+      if (_argsHaveCategory) {
+        await context.read<Todo>().editWorker(widget.args.category, worker);
+      } else {
+        await context.read<Todo>().addWorker(worker);
+      }
+      Navigator.of(context).pop();
     }
-    //go back
-    Navigator.of(context).pop();
   }
 
   @override
   void initState() {
     if (_argsHaveCategory) {
-      title = widget.args.category.title;
-      icon = widget.args.category.icon;
+      worker = widget.args.category;
+    } else {
+      worker = Worker();
     }
     super.initState();
   }
@@ -87,19 +78,25 @@ class _AddCategoryState extends State<AddCategory> {
     super.didChangeDependencies();
   }
 
+  String fieldValidator(dynamic value) {
+    if (value == null) {
+      return 'Please enter some text';
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: NeumorphicTheme.baseColor(context),
-        resizeToAvoidBottomPadding: false,
         appBar: NeumorphicAppBar(
           title: _argsHaveCategory
               ? const Text('add_category.title_edit').tr()
               : const Text('add_category.title_add').tr(),
         ),
         body: Padding(
-            padding: EdgeInsets.fromLTRB(Style.mainPadding, Style.halfPadding,
-                Style.mainPadding, Style.mainPadding),
+            padding: EdgeInsets.fromLTRB(
+                Style.mainPadding, Style.halfPadding, Style.mainPadding, 0),
             child: AnimatedOpacity(
               ///run Opacity animation when page transistion end
               opacity: _transistionPageEnd ? 1 : 0,
@@ -109,56 +106,104 @@ class _AddCategoryState extends State<AddCategory> {
                 if (!_transistionPageEnd) {
                   return const SizedBox.shrink();
                 }
-                return Wrap(
-                    direction: Axis.horizontal,
-                    alignment: WrapAlignment.start,
-                    runSpacing: Style.doublePadding,
+                return Form(
+                  key: _formKey,
+                  child: Stack(
                     children: <Widget>[
-                      NeumorphicTextField(
-                          hint: null,
-                          label: 'add_category.name'.tr(),
-                          text: title,
-                          onChanged: categoryTitleChanget),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          TextFieldLabel('add_category.icon'.tr()),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Wrap(
-                              alignment: WrapAlignment.spaceAround,
-                              runSpacing: 16,
-                              spacing: 16,
-                              children: icons_list.entries
-                                  .map((item) => NeumorphicRadio(
-                                        groupValue: icon,
-                                        padding: const EdgeInsets.all(16),
-                                        style: const NeumorphicRadioStyle(
-                                          boxShape: NeumorphicBoxShape.circle(),
-                                        ),
-                                        value: item.value,
-                                        child: FaIcon(item.value,
-                                            size: 18,
-                                            color: item.value == icon
-                                                ? NeumorphicTheme.accentColor(
-                                                    context)
-                                                : NeumorphicTheme
-                                                    .defaultTextColor(context)),
-                                        onChanged: iconChanget,
-                                      ))
-                                  .toList(),
+                      ListView(
+                          physics: const BouncingScrollPhysics(),
+                          padding: const EdgeInsets.only(bottom: 16.0),
+                          children: <Widget>[
+                            NeumorphicTextFormDecorator(
+                              label: 'add_category.surname'.tr(),
+                              child: TextFormField(
+                                textInputAction: TextInputAction.next,
+                                onFieldSubmitted: (_) =>
+                                    FocusScope.of(context).nextFocus(),
+                                initialValue: worker.surname,
+                                validator: fieldValidator,
+                                onSaved: (value) {
+                                  worker = worker.copyWith(surname: value);
+                                },
+                              ),
                             ),
-                          ),
-                        ],
+                            NeumorphicTextFormDecorator(
+                              label: 'add_category.name'.tr(),
+                              child: TextFormField(
+                                textInputAction: TextInputAction.next,
+                                onFieldSubmitted: (_) =>
+                                    FocusScope.of(context).nextFocus(),
+                                initialValue: worker.name,
+                                validator: fieldValidator,
+                                onSaved: (value) {
+                                  worker = worker.copyWith(name: value);
+                                },
+                              ),
+                            ),
+                            NeumorphicTextFormDecorator(
+                              label: 'add_category.middle_name'.tr(),
+                              child: TextFormField(
+                                textInputAction: TextInputAction.next,
+                                onFieldSubmitted: (_) =>
+                                    FocusScope.of(context).nextFocus(),
+                                initialValue: worker.middleName,
+                                validator: fieldValidator,
+                                onSaved: (value) {
+                                  worker = worker.copyWith(middleName: value);
+                                },
+                              ),
+                            ),
+                            NeumorphicTextFormDecorator(
+                              label: 'add_category.date'.tr(),
+                              child: DateTimeField(
+                                format: DateFormat('yyyy-MM-dd'),
+                                textInputAction: TextInputAction.next,
+                                initialValue: worker.date,
+                                //TODO: fix next focus
+                                onFieldSubmitted: (_) =>
+                                    FocusScope.of(context).nextFocus(),
+                                onShowPicker: (context, currentValue) {
+                                  return showDatePicker(
+                                      context: context,
+                                      firstDate: DateTime(1900),
+                                      initialDate:
+                                          currentValue ?? DateTime.now(),
+                                      lastDate: DateTime(2100));
+                                },
+                                onSaved: (value) {
+                                  worker = worker.copyWith(date: value);
+                                },
+                                validator: fieldValidator,
+                              ),
+                            ),
+                            NeumorphicTextFormDecorator(
+                              label: 'add_category.position'.tr(),
+                              child: TextFormField(
+                                textInputAction: TextInputAction.next,
+                                onFieldSubmitted: (_) =>
+                                    FocusScope.of(context).nextFocus(),
+                                initialValue: worker.position,
+                                validator: fieldValidator,
+                                onSaved: (value) {
+                                  worker = worker.copyWith(position: value);
+                                },
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            Center(
+                              child: NeumorphicSaveButton(
+                                  canSave: true, onPressed: saveCategory),
+                            )
+                          ]),
+                      const CoverLine(),
+                      CoverLine(
+                        alignment: Alignment.bottomCenter,
                       ),
-                      SizedBox(
-                        width: Style.halfPadding,
-                      ),
-                      Center(
-                        child: NeumorphicSaveButton(
-                            canSave: _canSave, onPressed: saveCategory),
-                      )
-                    ]);
+                    ],
+                  ),
+                );
               }),
             )));
   }

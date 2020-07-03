@@ -4,26 +4,34 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 class NeumorphicTextFormDecorator extends StatelessWidget {
   final String label;
   final Widget child;
+  final EdgeInsetsGeometry padding;
 
-  const NeumorphicTextFormDecorator({this.label, this.child, Key key})
+  const NeumorphicTextFormDecorator(
+      {this.label,
+      this.child,
+      this.padding = const EdgeInsets.symmetric(vertical: 8.0),
+      Key key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        if (label != null) TextFieldLabel(label),
-        Neumorphic(
-          margin: const EdgeInsets.only(left: 8, right: 8, top: 2, bottom: 4),
-          style: NeumorphicStyle(
-            depth: NeumorphicTheme.embossDepth(context),
-            boxShape: const NeumorphicBoxShape.stadium(),
-          ),
-          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 14),
-          child: child,
-        )
-      ],
+    return Padding(
+      padding: padding,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          if (label != null) TextFieldLabel(label),
+          Neumorphic(
+            margin: const EdgeInsets.only(left: 8, right: 8, top: 2, bottom: 4),
+            style: NeumorphicStyle(
+              depth: NeumorphicTheme.embossDepth(context),
+              boxShape: const NeumorphicBoxShape.stadium(),
+            ),
+            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 14),
+            child: child,
+          )
+        ],
+      ),
     );
   }
 }

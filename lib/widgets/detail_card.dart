@@ -1,49 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:easy_localization/easy_localization.dart';
 import '../models/data_models.dart';
 import '../style.dart';
-import 'animated_percent.dart';
-
-class HeroProgress extends StatelessWidget {
-  const HeroProgress({
-    Key key,
-    @required this.category,
-  }) : super(key: key);
-
-  final Worker category;
-
-  @override
-  Widget build(BuildContext context) {
-    return Hero(
-      tag: 'progress_${category.id}',
-      flightShuttleBuilder: flightShuttleBuilderFix,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            'task_card',
-            style: TextStyle(
-                color:
-                    NeumorphicTheme.defaultTextColor(context).withOpacity(0.5),
-                fontSize: 16.00),
-          ).plural(category.childrens),
-          const SizedBox(
-            height: Style.halfPadding,
-          ),
-          Row(
-            children: <Widget>[
-              SizedBox(
-                width: Style.mainPadding,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 class HeroTitle extends StatelessWidget {
   const HeroTitle({
@@ -59,11 +17,58 @@ class HeroTitle extends StatelessWidget {
       tag: 'title_${category.id}',
       flightShuttleBuilder: flightShuttleBuilderFix,
       child: Text(
-        category.name,
+        category.surname,
         style: TextStyle(
             color: NeumorphicTheme.defaultTextColor(context), fontSize: 40.00),
         softWrap: false,
         overflow: TextOverflow.ellipsis,
+      ),
+    );
+  }
+}
+
+class HeroSubTitle extends StatelessWidget {
+  const HeroSubTitle({
+    Key key,
+    @required this.category,
+  }) : super(key: key);
+
+  final Worker category;
+
+  @override
+  Widget build(BuildContext context) {
+    return Hero(
+      tag: 'subTitle_${category.id}',
+      flightShuttleBuilder: flightShuttleBuilderFix,
+      child: Text(
+        '${category.name} ${category.middleName} ',
+        style: TextStyle(color: Style.subTextColor, fontSize: 30.00),
+        //softWrap: false,
+        //overflow: TextOverflow.ellipsis,
+      ),
+    );
+  }
+}
+
+class HeroDetail extends StatelessWidget {
+  const HeroDetail({
+    Key key,
+    @required this.category,
+  }) : super(key: key);
+
+  final Worker category;
+
+  @override
+  Widget build(BuildContext context) {
+    return Hero(
+      tag: 'position_${category.id}',
+      flightShuttleBuilder: flightShuttleBuilderFix,
+      child: Text(
+        category.position,
+        style: TextStyle(
+            color: NeumorphicTheme.accentColor(context), fontSize: 30.00),
+        //softWrap: false,
+        //overflow: TextOverflow.ellipsis,
       ),
     );
   }

@@ -1,7 +1,10 @@
 {
-	"add_category.icon": "Значок",
-	"add_category.name": "Название",
-	"add_category.title_add": "Новая категория",
+	"add_category.date": "День рождения",
+	"add_category.middle_name": "Отчество",
+	"add_category.name": "Имя",
+	"add_category.position": "Должность",
+	"add_category.surname": "Фамилия",
+	"add_category.title_add": "Новый работник",
 	"add_category.title_edit": "Редактирование",
 	"add_task.description": "Описание",
 	"add_task.description_hint": "Описание",
@@ -26,5 +29,5 @@
 	"task_count.other": "У вас {} задач",
 	"task_count.two": "У вас {} задачи",
 	"task_count.zero": "У вас нет задач",
-	"title": "Neo ToDo"
+	"title": "Neo Workers"
 }

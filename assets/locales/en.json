@@ -1,8 +1,11 @@
 {
-	"add_category.icon": "Icon",
-	"add_category.name": "Title",
-	"add_category.title_add": "New category",
-	"add_category.title_edit": "Editing category",
+	"add_category.date": "Birthday",
+	"add_category.middle_name": "Middle Name",
+	"add_category.name": "Name",
+	"add_category.position": "Position",
+	"add_category.surname": "Surname",
+	"add_category.title_add": "New worker",
+	"add_category.title_edit": "Editing worker",
 	"add_task.description": "Description",
 	"add_task.description_hint": "Description",
 	"add_task.title": "Title",
@@ -26,5 +29,5 @@
 	"task_count.other": "You have {} tasks",
 	"task_count.two": "You have {} tasks",
 	"task_count.zero": "You not have tasks",
-	"title": "Neo ToDo"
+	"title": "Neo Workers"
 }

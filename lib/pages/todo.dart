@@ -72,8 +72,8 @@ class _TodoPageState extends State<TodoPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.fromLTRB(Style.mainPadding, Style.halfPadding,
-                  Style.mainPadding, Style.mainPadding),
+              padding: const EdgeInsets.fromLTRB(Style.mainPadding,
+                  Style.halfPadding, Style.mainPadding, Style.mainPadding),
               child: Selector<Todo, Worker>(
                 selector: (BuildContext context, Todo todo) => todo.categoryes
                     .firstWhere(
@@ -86,11 +86,15 @@ class _TodoPageState extends State<TodoPage> {
                     //return empty container when category deletet
                     return const SizedBox.shrink();
                   }
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                  return Column(
+                    //crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       const SizedBox(width: Style.mainPadding),
-                      Expanded(child: HeroProgress(category: category)),
+                      // Expanded(child: HeroProgress(category: category)),
+                      HeroTitle(category: category),
+                      HeroSubTitle(category: category),
+                      HeroDetail(category: category)
                     ],
                   );
                 },
@@ -165,19 +169,6 @@ class CategoryAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return NeumorphicAppBar(
-      title: Selector<Todo, Worker>(
-          selector: (BuildContext context, Todo todo) => todo.categoryes
-              .firstWhere((element) => element.id == args.category.id,
-                  orElse: () => null),
-          shouldRebuild: (old_category, new_category) =>
-              old_category != new_category,
-          builder: (context, category, _) {
-            if (category == null) {
-              //return empty container when category deletet
-              return const SizedBox.shrink();
-            }
-            return HeroTitle(category: category);
-          }),
       actions: <Widget>[
         NeumorphicPopupMenuButton(
           icon: Icon(FontAwesomeIcons.ellipsisV),
@@ -189,7 +180,7 @@ class CategoryAppBar extends StatelessWidget implements PreferredSizeWidget {
                 child: Row(
                   children: <Widget>[
                     FaIcon(FontAwesomeIcons.edit),
-                    SizedBox(width: Style.halfPadding),
+                    const SizedBox(width: Style.halfPadding),
                     const Text('Edit'),
                   ],
                 ),
@@ -198,7 +189,7 @@ class CategoryAppBar extends StatelessWidget implements PreferredSizeWidget {
                 child: Row(
                   children: <Widget>[
                     FaIcon(FontAwesomeIcons.trashAlt),
-                    SizedBox(width: Style.halfPadding),
+                    const SizedBox(width: Style.halfPadding),
                     const Text('Delete'),
                   ],
                 ),

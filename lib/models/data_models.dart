@@ -115,12 +115,14 @@ class Child extends DataModel {
   @override
   final int id;
   final int worker;
+  final String surname;
   final String name;
   final String middleName;
   final DateTime date;
   Child({
     this.id,
     this.worker,
+    this.surname,
     this.name,
     this.middleName,
     this.date,
@@ -132,12 +134,14 @@ class Child extends DataModel {
     int id,
     int worker,
     String name,
+    String surname,
     String middleName,
     DateTime date,
   }) {
     return Child(
       id: id ?? this.id,
       worker: worker ?? this.worker,
+      surname: surname ?? this.surname,
       name: name ?? this.name,
       middleName: middleName ?? this.middleName,
       date: date ?? this.date,
@@ -148,6 +152,7 @@ class Child extends DataModel {
   Map<String, dynamic> toMap() {
     final map = <String, dynamic>{
       'worker': worker,
+      'surname': surname,
       'name': name,
       'middleName': middleName,
       'date': date?.millisecondsSinceEpoch,
@@ -164,6 +169,7 @@ class Child extends DataModel {
     return Child(
       id: map['id'] as int,
       worker: map['worker'] as int,
+      surname: map['surname'] as String,
       name: map['name'] as String,
       middleName: map['middleName'] as String,
       date: DateTime.parse(map['date'] as String),
@@ -172,7 +178,7 @@ class Child extends DataModel {
 
   @override
   String toString() {
-    return 'Child(id: $id, worker: $worker, name: $name, middleName: $middleName, date: $date)';
+    return 'Child(id: $id, worker: $worker, surname: $surname, name: $name, middleName: $middleName, date: $date)';
   }
 
   @override
@@ -182,6 +188,7 @@ class Child extends DataModel {
     return o is Child &&
         o.id == id &&
         o.worker == worker &&
+        o.surname == surname &&
         o.name == name &&
         o.middleName == middleName &&
         o.date == date;
@@ -191,6 +198,7 @@ class Child extends DataModel {
   int get hashCode {
     return id.hashCode ^
         worker.hashCode ^
+        surname.hashCode ^
         name.hashCode ^
         middleName.hashCode ^
         date.hashCode;

@@ -21,7 +21,7 @@ class ChildWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Neumorphic(
-      margin: EdgeInsets.symmetric(vertical: Style.halfPadding),
+      margin: const EdgeInsets.symmetric(vertical: Style.halfPadding),
       style: NeumorphicStyle(
         depth: 3,
         intensity: 0.5,

@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -15,7 +14,6 @@ import '../widgets/detail_card.dart';
 import '../widgets/empty.dart';
 import '../widgets/neo_pop_up.dart';
 import '../widgets/task_item.dart';
-import '../widgets/text_field.dart';
 import 'add_bottom_shet.dart';
 
 class TodoPage extends StatefulWidget {
@@ -39,17 +37,6 @@ class _TodoPageState extends State<TodoPage> {
   @override
   void initState() {
     context.read<Todo>().getChildrens(widget.args.category.id);
-
-    /*
-    context.read<Todo>().addListener(() {
-      setState(() {
-       var _category =  context.read<Todo>().categoryes
-                    .firstWhere((element) => element.id == args.category.id,
-                        orElse: () => null);
-          print(_category);
-      });
-    });
-*/
     super.initState();
   }
 
@@ -238,7 +225,7 @@ class ListBody extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 80),
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.fromLTRB(
+                        padding: const EdgeInsets.fromLTRB(
                             Style.mainPadding,
                             Style.halfPadding,
                             Style.mainPadding,

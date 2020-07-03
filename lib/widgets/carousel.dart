@@ -99,7 +99,7 @@ class CategoryCard extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: Neumorphic(
         padding: const EdgeInsets.all(18.0),
-        margin: EdgeInsets.fromLTRB(
+        margin: const EdgeInsets.fromLTRB(
             0, Style.doublePadding, Style.doublePadding, Style.doublePadding),
         style: NeumorphicStyle(
             depth: NeumorphicTheme.depth(context) * 2 * scaleDepth,
@@ -118,7 +118,7 @@ class CategoryCard extends StatelessWidget {
               HeroTitle(category: category),
               HeroSubTitle(category: category),
               const Spacer(),
-              SizedBox(
+              const SizedBox(
                 height: Style.mainPadding,
               ),
               //HeroProgress(category: category)
@@ -144,7 +144,7 @@ class CategoryAddCard extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: Neumorphic(
         padding: const EdgeInsets.all(18.0),
-        margin: EdgeInsets.fromLTRB(
+        margin: const EdgeInsets.fromLTRB(
             0, Style.doublePadding, Style.doublePadding, Style.doublePadding),
         style: NeumorphicStyle(
           depth: NeumorphicTheme.depth(context) * 2 * scaleDepth,

@@ -34,7 +34,7 @@ class NeumorphicSaveButton extends StatelessWidget {
             depth: 0,
             shape: canSave ? NeumorphicShape.convex : NeumorphicShape.flat,
           ),
-          child: Text(
+          child: const Text(
             'save',
             style: TextStyle(color: Colors.white, fontSize: 16),
           ).tr()),

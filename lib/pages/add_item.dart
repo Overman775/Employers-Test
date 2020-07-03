@@ -1,4 +1,8 @@
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:emplist/models/data_models.dart';
+import 'package:emplist/widgets/save_button.dart';
+import 'package:emplist/widgets/text_form_fiels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
@@ -17,48 +21,28 @@ class AddChild extends StatefulWidget {
 }
 
 class _AddChildState extends State<AddChild> {
-  @override
-  Widget build(BuildContext context) {
-    throw UnimplementedError();
-  }
-
-  /*
-  String title;
-  String description;
-
-  void itemTitleChanget(String title) {
-    setState(() {
-      this.title = title;
-    });
-  }
-
-  void itemDescriptionChanget(String description) {
-    setState(() {
-      this.description = description;
-    });
-  }
-
-  bool get _saveEnable {
-    if (title.isEmpty) {
-      return false;
-    }
-    return true;
-  }
+  Child children;
+  final _formKey = GlobalKey<FormState>();
 
   Future saveItem() async {
-    if (_saveEnable) {
-      await context.read<Todo>().editChild(widget.args.item,
-          widget.args.item.copyWith(title: title, description: description));
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
 
-      //go back
+      await context.read<Todo>().editChild(widget.args.item, children);
       Navigator.of(context).pop();
     }
   }
 
+  String fieldValidator(dynamic value) {
+    if (value == null) {
+      return 'Please enter some text';
+    }
+    return null;
+  }
+
   @override
   void initState() {
-    title = widget.args.item.title;
-    description = widget.args.item.description;
+    children = widget.args.item;
     super.initState();
   }
 
@@ -70,38 +54,78 @@ class _AddChildState extends State<AddChild> {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(Style.mainPadding),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              NeumorphicTextField(
-                label: 'add_task.title'.tr(),
-                text: widget.args.item.title,
-                onChanged: itemTitleChanget,
+          child: Form(
+            key: _formKey,
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
+                    Widget>[
+              NeumorphicTextFormDecorator(
+                label: 'add_category.surname'.tr(),
+                child: TextFormField(
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+                  initialValue: children.surname,
+                  validator: fieldValidator,
+                  onSaved: (value) {
+                    children = children.copyWith(surname: value);
+                  },
+                ),
               ),
-              SizedBox(height: Style.mainPadding),
-              NeumorphicTextField(
-                  label: 'add_task.description'.tr(),
-                  text: widget.args.item.description,
-                  onChanged: itemDescriptionChanget),
-              SizedBox(height: Style.mainPadding),
+              NeumorphicTextFormDecorator(
+                label: 'add_category.name'.tr(),
+                child: TextFormField(
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+                  initialValue: children.name,
+                  validator: fieldValidator,
+                  onSaved: (value) {
+                    children = children.copyWith(name: value);
+                  },
+                ),
+              ),
+              NeumorphicTextFormDecorator(
+                label: 'add_category.middle_name'.tr(),
+                child: TextFormField(
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+                  initialValue: children.middleName,
+                  validator: fieldValidator,
+                  onSaved: (value) {
+                    children = children.copyWith(middleName: value);
+                  },
+                ),
+              ),
+              NeumorphicTextFormDecorator(
+                label: 'add_category.date'.tr(),
+                child: DateTimeField(
+                  format: DateFormat('dd.MM.yyyy'),
+                  textInputAction: TextInputAction.next,
+                  initialValue: children.date,
+                  //TODO: fix next focus
+                  onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+                  onShowPicker: (context, currentValue) {
+                    return showDatePicker(
+                        context: context,
+                        firstDate: DateTime(1900),
+                        initialDate: currentValue ?? DateTime.now(),
+                        lastDate: DateTime(2100));
+                  },
+                  onSaved: (value) {
+                    children = children.copyWith(date: value);
+                  },
+                  validator: fieldValidator,
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
               Center(
-                  child: NeumorphicButton(
-                padding: const EdgeInsets.all(16),
-                style: NeumorphicStyle(
-                    boxShape:
-                        NeumorphicBoxShape.roundRect(Style.mainBorderRadius)),
-                child: Text('save',
-                        style: TextStyle(
-                            color: _saveEnable
-                                ? NeumorphicTheme.accentColor(context)
-                                : NeumorphicTheme.defaultTextColor(context)))
-                    .tr(),
-                onPressed: saveItem,
-              ))
-            ],
+                child: NeumorphicSaveButton(canSave: true, onPressed: saveItem),
+              )
+            ]),
           ),
         ),
       ),
     );
-  }*/
+  }
 }

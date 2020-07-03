@@ -104,7 +104,7 @@ class _AddChildBottomShetState extends State<AddChildBottomShet> {
                     child: DateTimeField(
                       decoration: InputDecoration.collapsed(
                           hintText: 'add_category.date'.tr()),
-                      format: DateFormat('yyyy-MM-dd'),
+                      format: DateFormat('dd.MM.yyyy'),
                       textInputAction: TextInputAction.next,
                       //TODO: fix next focus
                       onFieldSubmitted: (_) =>

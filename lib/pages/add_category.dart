@@ -156,7 +156,7 @@ class _AddWorkerState extends State<AddWorker> {
                             NeumorphicTextFormDecorator(
                               label: 'add_category.date'.tr(),
                               child: DateTimeField(
-                                format: DateFormat('yyyy-MM-dd'),
+                                format: DateFormat('dd.MM.yyyy'),
                                 textInputAction: TextInputAction.next,
                                 initialValue: worker.date,
                                 //TODO: fix next focus

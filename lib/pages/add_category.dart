@@ -3,7 +3,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../models/data_models.dart';
@@ -11,10 +10,8 @@ import '../models/pages_arguments.dart';
 import '../providers/todo.dart';
 import '../router.dart';
 import '../style.dart';
-import '../utils/icons.dart';
 import '../widgets/cover_line.dart';
 import '../widgets/save_button.dart';
-import '../widgets/text_field.dart';
 import '../widgets/text_form_fiels.dart';
 
 class AddWorker extends StatefulWidget {
@@ -38,14 +35,6 @@ class _AddWorkerState extends State<AddWorker> {
   ///if editing then return true
   bool get _transistionPageEnd =>
       animationPageInjection?.animationPage?.value == 1 || _argsHaveCategory;
-
-  bool get _canSave {
-    if (title != null) {
-      return title.isNotEmpty;
-    } else {
-      return false;
-    }
-  }
 
   Future saveCategory() async {
     if (_formKey.currentState.validate()) {

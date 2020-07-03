@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +13,8 @@ import '../style.dart';
 class ChildWidget extends StatelessWidget {
   final Child item;
   final Worker category;
+
+  final DateFormat dateFormat = DateFormat('dd.MM.yyyy');
 
   ChildWidget(this.item, this.category, {Key key}) : super(key: key);
 
@@ -27,8 +30,8 @@ class ChildWidget extends StatelessWidget {
       child: Dismissible(
         key: Key('item_${item.id}'),
         child: ListTile(
-          title: Text(item.name),
-          subtitle: item.middleName != null ? Text(item.middleName) : null,
+          title: Text('${item.surname} ${item.name} ${item.middleName}'),
+          trailing: Text('${dateFormat.format(item.date)}'),
           //go to edit page
           onTap: () => unawaited(Navigator.pushNamed(context, '/item/edit',
               arguments: ItemPageArguments(item: item, category: category))),
@@ -37,7 +40,7 @@ class ChildWidget extends StatelessWidget {
           padding: const EdgeInsets.all(2.0),
           child: Neumorphic(
             drawSurfaceAboveChild: false,
-            padding: EdgeInsets.only(left: Style.mainPadding),
+            padding: const EdgeInsets.only(left: Style.mainPadding),
             style: NeumorphicStyle(
               depth: -6,
               color: Style.editColor,
@@ -58,7 +61,7 @@ class ChildWidget extends StatelessWidget {
           padding: const EdgeInsets.all(2.0),
           child: Neumorphic(
             drawSurfaceAboveChild: false,
-            padding: EdgeInsets.only(right: Style.mainPadding),
+            padding: const EdgeInsets.only(right: Style.mainPadding),
             style: NeumorphicStyle(
               depth: -6,
               color: Style.deleteColor,

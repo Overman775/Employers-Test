@@ -155,7 +155,7 @@ class Child extends DataModel {
       'surname': surname,
       'name': name,
       'middleName': middleName,
-      'date': date?.millisecondsSinceEpoch,
+      'date': date?.toIso8601String(),
     };
     if (id != null) {
       map['id'] = id;

@@ -32,7 +32,7 @@ class MainPage extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(Style.doublePadding,
                   Style.mainPadding, Style.mainPadding, 0.0),
               child: Selector<Todo, int>(
-                  selector: (_, todo) => todo.totalChildrens,
+                  selector: (_, todo) => todo.categoryes.length,
                   shouldRebuild: (old_total, new_total) =>
                       old_total != new_total,
                   builder: (_, total_items, __) {

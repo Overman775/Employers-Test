@@ -78,12 +78,18 @@ class ChildWidget extends StatelessWidget {
             ),
           ),
         ),
+        confirmDismiss: (direction) {
+          if (direction == DismissDirection.endToStart) {
+            return Future.value(true);
+          } else {
+            unawaited(Navigator.pushNamed(context, '/item/edit',
+                arguments: ItemPageArguments(item: item, category: category)));
+            return Future.value(false);
+          }
+        },
         onDismissed: (direction) {
           if (direction == DismissDirection.endToStart) {
             context.read<Todo>().deleteChild(item);
-          } else if (direction == DismissDirection.startToEnd) {
-            unawaited(Navigator.pushNamed(context, '/item/edit',
-                arguments: ItemPageArguments(item: item, category: category)));
           }
         },
       ),

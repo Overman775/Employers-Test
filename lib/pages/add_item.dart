@@ -5,6 +5,7 @@ import 'package:emplist/widgets/save_button.dart';
 import 'package:emplist/widgets/text_form_fiels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/todo.dart';
@@ -33,6 +34,11 @@ class _AddChildState extends State<AddChild> {
     }
   }
 
+  Future deleteItem() async {
+    await context.read<Todo>().deleteChild(widget.args.item);
+    Navigator.of(context).pop();
+  }
+
   String fieldValidator(dynamic value) {
     if (value == null) {
       return 'Please enter some text';
@@ -50,7 +56,14 @@ class _AddChildState extends State<AddChild> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: NeumorphicTheme.baseColor(context),
-      appBar: NeumorphicAppBar(),
+      appBar: NeumorphicAppBar(
+        actions: <Widget>[
+          NeumorphicButton(
+            child: Icon(FontAwesomeIcons.trashAlt),
+            onPressed: deleteItem,
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(Style.mainPadding),

@@ -21,7 +21,7 @@ To clone and run this application, you'll need [Git](https://git-scm.com) and [F
 $ git clone https://github.com/Overman775/Employers-Test.git
 
 # Go into the repository
-$ cd fluttery-todo
+$ cd Employers-Test
 
 # Install dependencies
 $ flutter packages get
